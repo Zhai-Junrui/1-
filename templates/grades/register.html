@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}注册 · 学生成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen items-center justify-center p-4">
+    <div class="card w-full max-w-sm bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="flex flex-col items-center gap-2 text-center">
+                <div class="btn btn-circle btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                    </svg>
+                </div>
+                <h1 class="card-title text-2xl">注册教师账号</h1>
+                <p class="text-sm opacity-70">创建账号后即可管理学生成绩</p>
+            </div>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">用户名</legend>
+                    <input type="text" name="username" value="{{ form.username.value|default:'' }}" required class="input w-full {% if form.username.errors %}input-error{% endif %}" placeholder="请输入用户名" autocomplete="username">
+                    {% for error in form.username.errors %}<p class="text-error text-sm">{{ error }}</p>{% endfor %}
+                </fieldset>
+
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">密码</legend>
+                    <input type="password" name="password1" required class="input w-full {% if form.password1.errors %}input-error{% endif %}" placeholder="请输入密码" autocomplete="new-password">
+                    {% for error in form.password1.errors %}<p class="text-error text-sm">{{ error }}</p>{% endfor %}
+                </fieldset>
+
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">确认密码</legend>
+                    <input type="password" name="password2" required class="input w-full {% if form.password2.errors %}input-error{% endif %}" placeholder="请再次输入密码" autocomplete="new-password">
+                    {% for error in form.password2.errors %}<p class="text-error text-sm">{{ error }}</p>{% endfor %}
+                </fieldset>
+
+                <button class="btn btn-primary btn-block" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                    </svg>
+                    注册
+                </button>
+            </form>
+
+            <p class="text-center text-sm opacity-70">
+                已有账号？
+                <a href="{% url 'login' %}" class="link link-primary">返回登录</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}登录 · 学生成绩管理系统{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen items-center justify-center p-4">
+    <div class="card w-full max-w-sm bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="flex flex-col items-center gap-2 text-center">
+                <div class="btn btn-circle btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                    </svg>
+                </div>
+                <h1 class="card-title text-2xl">学生成绩管理系统</h1>
+                <p class="text-sm opacity-70">教师登录</p>
+            </div>
+
+            {% if form.errors %}
+            <div role="alert" class="alert alert-error">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <span>用户名或密码错误，请重试。</span>
+            </div>
+            {% endif %}
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">用户名</legend>
+                    <input type="text" name="username" autofocus required class="input w-full" placeholder="请输入用户名" autocomplete="username">
+                </fieldset>
+
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">密码</legend>
+                    <input type="password" name="password" required class="input w-full" placeholder="请输入密码" autocomplete="current-password">
+                </fieldset>
+
+                <button class="btn btn-primary btn-block" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                    </svg>
+                    登录
+                </button>
+            </form>
+
+            <p class="text-center text-sm opacity-70">
+                还没有账号？
+                <a href="{% url 'register' %}" class="link link-primary">立即注册</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
