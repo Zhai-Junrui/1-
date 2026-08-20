@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}分配教师 · {{ cls.name }}{% endblock %}
+
+{% block content %}
+<div class="navbar bg-base-100 shadow-sm">
+    <div class="navbar-start">
+        <a href="{% url 'class_manage' %}" class="btn btn-ghost btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+            返回
+        </a>
+    </div>
+    <div class="navbar-end px-2">
+        <span class="text-lg font-bold">分配教师</span>
+    </div>
+</div>
+
+<main class="mx-auto max-w-lg space-y-6 px-4 py-6">
+    {% include "partials/messages.html" %}
+
+    <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">分配教师到「{{ cls.name }}」</h2>
+            <p class="text-sm opacity-70">勾选该班级的任课教师，保存后教师即可查看本班学生成绩。</p>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">任课教师</legend>
+                    {% if teachers %}
+                    <div class="flex flex-col gap-2">
+                        {% for t in teachers %}
+                        <label class="flex cursor-pointer items-center gap-2">
+                            <input type="checkbox" name="teachers" value="{{ t.pk }}" class="checkbox" {% if t.pk in class_teacher_ids %}checked{% endif %}>
+                            <span>{{ t.username }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="label text-warning">暂无可分配的教师，请先让教师在系统内注册账号。</p>
+                    {% endif %}
+                </fieldset>
+                <div class="card-actions justify-end">
+                    <a href="{% url 'class_manage' %}" class="btn btn-ghost">取消</a>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}
